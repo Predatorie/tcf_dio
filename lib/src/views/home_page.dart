@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tcf_dio/src/branding.dart';
-import 'package:tcf_dio/src/cubits/athletes_cubit.dart';
+import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/views/athletes_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
         title: Text('TOLLAND CROSSFIT'),
         centerTitle: true,
       ),
-      body: BlocListener<AthletesCubit, AthletesState>(
+      body: BlocListener<AppCubit, AppState>(
         listener: (context, state) {
           if (state is AthletesLoading) {
             _showScafold(context, 'Loading...');
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                 ),
                 FlatButton(
                   height: 50,
-                  onPressed: () => context.read<AthletesCubit>().getAthletes(),
+                  onPressed: () => context.read<AppCubit>().getAthletes(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tcf_dio/src/cubits/athletes_cubit.dart';
+import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/models/athletes.dart';
 import 'package:tcf_dio/src/widgets/athlete_card.dart';
 
@@ -13,7 +13,7 @@ class AthletesPage extends StatelessWidget {
           title: Text('Athletes'),
           centerTitle: true,
         ),
-        body: BlocBuilder<AthletesCubit, AthletesState>(
+        body: BlocBuilder<AppCubit, AppState>(
           builder: (context, state) {
             if (state is AthletesLoaded) {
               return _AthletesView(

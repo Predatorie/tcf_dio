@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcf_dio/src/bloc/bloc_observer.dart';
 import 'package:tcf_dio/src/branding.dart';
-import 'package:tcf_dio/src/cubits/athletes_cubit.dart';
+import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/repositories/api_repository.dart';
 import 'package:tcf_dio/src/views/athlete_page.dart';
 import 'package:tcf_dio/src/views/athletes_page.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _athletesCubit = AthletesCubit(apiRepository: ApiRespository());
+  final _athletesCubit = AppCubit(apiRepository: ApiRepository());
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
