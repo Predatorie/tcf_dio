@@ -16,11 +16,11 @@ class HomePage extends StatelessWidget {
       body: BlocListener<AppCubit, AppState>(
         listener: (context, state) {
           if (state is AthletesLoading) {
-            _showScafold(context, 'Loading...');
+            _showScaffold(context, 'Loading...');
           }
 
           if (state is AthletesError) {
-            _showScafold(context, state.errorMessage);
+            _showScaffold(context, state.errorMessage);
           }
 
           if (state is AthletesLoaded) {
@@ -95,7 +95,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-_showScafold(BuildContext context, String message) {
+_showScaffold(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
       .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
 
