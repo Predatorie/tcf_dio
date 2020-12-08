@@ -20,7 +20,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _athletesCubit = AppCubit(apiRepository: ApiRepository());
+  final _appCubit = AppCubit(apiRepository: ApiRepository());
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,19 +29,19 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (context) => BlocProvider.value(
               child: HomePage(),
-              value: _athletesCubit,
+              value: _appCubit,
             ),
         AthletesPage.routeName: (context) => BlocProvider.value(
               child: AthletesPage(),
-              value: _athletesCubit,
+              value: _appCubit,
             ),
         AthletePage.routeName: (context) => BlocProvider.value(
               child: AthletePage(),
-              value: _athletesCubit,
+              value: _appCubit,
             ),
         WorkoutPage.routeName: (context) => BlocProvider.value(
               child: WorkoutPage(),
-              value: _athletesCubit,
+              value: _appCubit,
             )
       },
     );
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    _athletesCubit.close();
+    _appCubit.close();
     super.dispose();
   }
 }
