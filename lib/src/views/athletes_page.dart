@@ -8,25 +8,15 @@ class AthletesPage extends StatelessWidget {
   static const String routeName = '/athletes';
   @override
   Widget build(BuildContext context) {
+    final Athletes athletes = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Athletes'),
           centerTitle: true,
         ),
-        body: BlocBuilder<AppCubit, AppState>(
-          builder: (context, state) {
-            if (state is AthletesLoaded) {
-              return _AthletesView(
-                athletes: state.athletes,
-              );
-            }
-
-            return Container(
-              child: Center(
-                child: Text('No results returned.'),
-              ),
-            );
-          },
+        body: _AthletesView(
+          athletes: athletes,
         ));
   }
 }
@@ -34,7 +24,10 @@ class AthletesPage extends StatelessWidget {
 class _AthletesView extends StatelessWidget {
   final Athletes athletes;
 
-  const _AthletesView({Key key, this.athletes}) : super(key: key);
+  const _AthletesView({
+    Key key,
+    this.athletes,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +46,14 @@ class _SearchResultItem extends StatelessWidget {
   const _SearchResultItem({Key key, this.athlete}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return AthleteCard(
-      email: athlete.attributes.email,
-      firstName: athlete.attributes.firstName,
-      lastName: athlete.attributes.lastName,
-      profileImageUrl: athlete.attributes.profileImageUrl,
-    );
+    return BlocBuilder<AppCubit, AppState>(builder: (ctx, state) {
+      return AthleteCard(
+        email: athlete.attributes.email,
+        firstName: athlete.attributes.firstName,
+        lastName: athlete.attributes.lastName,
+        profileImageUrl: athlete.attributes.profileImageUrl,
+        onTap: () => ctx.read<AppCubit>().getWorkouts(),
+      );
+    });
   }
 }

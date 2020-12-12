@@ -1,5 +1,5 @@
 import 'package:tcf_dio/src/exceptions/network_exception.dart';
-import 'package:tcf_dio/src/key/key.dart';
+import 'package:tcf_dio/src/key/Key.dart';
 import 'package:tcf_dio/src/models/affiliate.dart';
 import 'package:tcf_dio/src/models/athletes.dart';
 import 'package:tcf_dio/src/models/barbell_lift.dart';

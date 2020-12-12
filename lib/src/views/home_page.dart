@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tcf_dio/src/branding.dart';
 import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/views/athletes_page.dart';
+import 'package:tcf_dio/src/views/workout_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -24,10 +25,31 @@ class HomePage extends StatelessWidget {
           }
 
           if (state is AthletesLoaded) {
-            ScaffoldMessenger.of(context)
+            Scaffold.of(context)
                 .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
 
-            Navigator.of(context).pushNamed(AthletesPage.routeName);
+            Navigator.of(context).pushNamed(
+              AthletesPage.routeName,
+              arguments: state.athletes,
+            );
+          }
+
+          if (state is WorkoutsLoading) {
+            _showScaffold(context, 'Loading workouts...');
+          }
+
+          if (state is WorkoutsError) {
+            _showScaffold(context, state.errorMessage);
+          }
+
+          if (state is WorkoutsLoaded) {
+            Scaffold.of(context)
+                .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
+
+            Navigator.of(context).pushNamed(
+              WorkoutPage.routeName,
+              arguments: state.workouts,
+            );
           }
         },
         child: Center(
@@ -67,7 +89,7 @@ class HomePage extends StatelessWidget {
                 ),
                 FlatButton(
                   height: 50,
-                  onPressed: () {},
+                  onPressed: () => context.read<AppCubit>().getWorkouts(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -96,10 +118,10 @@ class HomePage extends StatelessWidget {
 }
 
 _showScaffold(BuildContext context, String message) {
-  ScaffoldMessenger.of(context)
+  Scaffold.of(context)
       .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
 
-  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  return Scaffold.of(context).showSnackBar(SnackBar(
     content: Text(message),
     duration: Duration(seconds: 4),
   ));

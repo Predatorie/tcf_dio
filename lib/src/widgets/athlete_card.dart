@@ -7,13 +7,14 @@ class AthleteCard extends StatelessWidget {
   final String lastName;
   final String email;
   final String profileImageUrl;
+  final void onTap;
 
   const AthleteCard(
       {Key key,
       @required this.firstName,
       @required this.lastName,
       @required this.email,
-      @required this.profileImageUrl})
+      @required this.profileImageUrl, @required this.onTap,})
       : super(key: key);
 
   @override
@@ -42,7 +43,7 @@ class AthleteCard extends StatelessWidget {
             '$firstName $lastName',
             overflow: TextOverflow.ellipsis,
           ),
-          onTap: () {},
+          onTap: () => onTap,
           subtitle: Text(email),
         ),
       ),

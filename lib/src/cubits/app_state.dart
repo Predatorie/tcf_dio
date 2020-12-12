@@ -59,3 +59,51 @@ class AffiliateError extends AppState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class WorkoutsLoading extends AppState {
+  const WorkoutsLoading();
+  @override
+  List<Object> get props => [];
+}
+
+class WorkoutsLoaded extends AppState {
+  final Workouts workouts;
+
+  const WorkoutsLoaded({@required this.workouts});
+
+  @override
+  List<Object> get props => [workouts];
+}
+
+class WorkoutsError extends AppState {
+  final String errorMessage;
+
+  const WorkoutsError({@required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+class MovementsLoading extends AppState {
+  const MovementsLoading();
+  @override
+  List<Object> get props => [];
+}
+
+class MovementsLoaded extends AppState {
+  final List<Movement> movements;
+
+  const MovementsLoaded({@required this.movements});
+
+  @override
+  List<Object> get props => [movements];
+}
+
+class MovementsError extends AppState {
+  final String errorMessage;
+
+  const MovementsError({@required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
