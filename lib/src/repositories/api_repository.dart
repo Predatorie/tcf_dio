@@ -1,4 +1,5 @@
-import 'package:tcf_dio/src/exceptions/network_exception.dart';
+import 'package:dartz/dartz.dart';
+import 'package:tcf_dio/src/exceptions/failures.dart';
 import 'package:tcf_dio/src/key/Key.dart';
 import 'package:tcf_dio/src/models/affiliate.dart';
 import 'package:tcf_dio/src/models/athletes.dart';
@@ -23,22 +24,22 @@ class ApiRepository with HttpProvider {
   final String _base = 'https://api.sugarwod.com/v2';
 
   /// gets a list of all athletes
-  Future<Athletes> getAthletes() async {
+  Future<Either<Failure, Athletes>> getAthletes() async {
     try {
       var body = await this.get(
-        query: '/athletes',
+        query: '/athletes?page[limit]=1000',
         base: _base,
         headers: _headers,
       );
 
-      return athletesFromJson(body);
+      return Right(athletesFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// gets the affiliate (box) info
-  Future<Box> getAffiliate() async {
+  Future<Either<Failure, Box>> getAffiliate() async {
     try {
       var body = await this.get(
         query: '/box',
@@ -46,14 +47,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return boxFromJson(body);
+      return Right(boxFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// gets a list of barbell lifts
-  Future<BarbellLifts> getBarbellLifts() async {
+  Future<Either<Failure, BarbellLifts>> getBarbellLifts() async {
     try {
       var body = await this.get(
         query: '/barbelllifts',
@@ -61,14 +62,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return barbellLiftsFromJson(body);
+      return Right(barbellLiftsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// returns a single of Barbell Lift.
-  Future<BarbellLift> getBarbellLiftById(String id) async {
+  Future<Either<Failure, BarbellLift>> getBarbellLiftById(String id) async {
     try {
       var body = await this.get(
         query: '/barbelllifts/$id',
@@ -76,14 +77,15 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return barbellLiftFromJson(body);
+      return Right(barbellLiftFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// returns a list of Barbell Lifts in the specified category., 'clean', 'deadlift'
-  Future<BarbellLifts> getBarbellLiftByCategory(String category) async {
+  Future<Either<Failure, BarbellLifts>> getBarbellLiftByCategory(
+      String category) async {
     try {
       var body = await this.get(
         query: '/barbelllifts/$category',
@@ -91,14 +93,15 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return barbellLiftsFromJson(body);
+      return Right(barbellLiftsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// returns a list of Benchmarks in the specified category. 'heroes', 'girls', 'games'
-  Future<Benchmarks> getBenchmarksByCategory(String category) async {
+  Future<Either<Failure, Benchmarks>> getBenchmarksByCategory(
+      String category) async {
     try {
       var body = await this.get(
         query: '/benchmarks/category/$category',
@@ -106,14 +109,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return benchMarksByCategoryFromJson(body);
+      return Right(benchMarksByCategoryFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// returns a single Benchmark
-  Future<Benchmark> getBenchmarkById(String id) async {
+  Future<Either<Failure, Benchmark>> getBenchmarkById(String id) async {
     try {
       var body = await this.get(
         query: '/benchmarks/$id',
@@ -121,14 +124,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return benchMarkFromJson(body);
+      return Right(benchMarkFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// returns a single of Movement.
-  Future<Movement> getMovementById(String id) async {
+  Future<Either<Failure, Movement>> getMovementById(String id) async {
     try {
       var body = await this.get(
         query: '/movements/$id',
@@ -136,14 +139,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return movementFromJson(body);
+      return Right(movementFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// returns a list of movements
-  Future<Movements> getMovements() async {
+  Future<Either<Failure, Movements>> getMovements() async {
     try {
       var body = await this.get(
         query: '/movements',
@@ -151,14 +154,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return movementsFromJson(body);
+      return Right(movementsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// gets a list of athletes for the supplied workout id
-  Future<Athletes> getAthletesForThisWorkout(String id) async {
+  Future<Either<Failure, Athletes>> getAthletesForThisWorkout(String id) async {
     try {
       var body = await this.get(
         query: '/workouts/$id/athletes',
@@ -166,14 +169,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return athletesFromJson(body);
+      return Right(athletesFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// retrieve a list of Workouts.
-  Future<Workouts> getWorkouts() async {
+  Future<Either<Failure, Workouts>> getWorkouts() async {
     try {
       var body = await this.get(
         query: '/workouts',
@@ -181,14 +184,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return workoutsFromJson(body);
+      return Right(workoutsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// retrieve a Workout.
-  Future<Workout> getWorkout(String id) async {
+  Future<Either<Failure, Workout>> getWorkout(String id) async {
     try {
       var body = await this.get(
         query: '/workouts/$id',
@@ -196,9 +199,9 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return workoutFromJson(body);
+      return Right(workoutFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
@@ -206,7 +209,7 @@ class ApiRepository with HttpProvider {
   /// dates can be a singular date_int or a range separated with a hyphen (7 day limit).
   /// default is "today".
   /// if no track_id is given, defaults to "all".
-  Future<Workouts> getWorkoutsByDate(String date) async {
+  Future<Either<Failure, Workouts>> getWorkoutsByDate(String date) async {
     try {
       var body = await this.get(
         query: '/workouts?dates=$date',
@@ -214,9 +217,9 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return workoutsFromJson(body);
+      return Right(workoutsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
@@ -224,7 +227,7 @@ class ApiRepository with HttpProvider {
   /// dates can be a singular date_int or a range separated with a hyphen (7 day limit).
   /// default is "today".
   /// if no track_id is given, defaults to "all".
-  Future<Workouts> getWorkoutsByDateRange(
+  Future<Either<Failure, Workouts>> getWorkoutsByDateRange(
       String fromDate, String toDate) async {
     try {
       var body = await this.get(
@@ -233,14 +236,14 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return workoutsFromJson(body);
+      return Right(workoutsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
   /// If no track_id is given, defaults to "all".
-  Future<Workouts> getWorkoutsByTrack(String trackId) async {
+  Future<Either<Failure, Workouts>> getWorkoutsByTrack(String trackId) async {
     try {
       var body = await this.get(
         query: '/workouts?track_id=$trackId',
@@ -248,9 +251,9 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return workoutsFromJson(body);
+      return Right(workoutsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
@@ -258,7 +261,7 @@ class ApiRepository with HttpProvider {
   /// dates can be a singular date_int or a range separated with a hyphen (7 day limit).
   /// default is "today".
   /// If no track_id is given, defaults to "all".
-  Future<Workouts> getWorkoutsByDateAndTrack(
+  Future<Either<Failure, Workouts>> getWorkoutsByDateAndTrack(
       String date, String trackId) async {
     try {
       var body = await this.get(
@@ -267,9 +270,9 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return workoutsFromJson(body);
+      return Right(workoutsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 
@@ -277,7 +280,7 @@ class ApiRepository with HttpProvider {
   /// dates can be a singular date_int or a range separated with a hyphen (7 day limit).
   /// default is "today".
   /// If no track_id is given, defaults to "all".
-  Future<Workouts> getWorkoutsByDateRangeAndTrack(
+  Future<Either<Failure, Workouts>> getWorkoutsByDateRangeAndTrack(
       String toDate, String fromDate, String trackId) async {
     try {
       var body = await this.get(
@@ -286,9 +289,9 @@ class ApiRepository with HttpProvider {
         headers: _headers,
       );
 
-      return workoutsFromJson(body);
+      return Right(workoutsFromJson(body));
     } catch (e) {
-      throw (NetworkException(message: e.toString()));
+      return Left(NetworkFailure());
     }
   }
 }
