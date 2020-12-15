@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:tcf_dio/src/branding.dart';
 
 class AthleteCard extends StatelessWidget {
@@ -8,14 +9,17 @@ class AthleteCard extends StatelessWidget {
   final String email;
   final String profileImageUrl;
   final void onTap;
+  final String lastLogin;
 
-  const AthleteCard(
-      {Key key,
-      @required this.firstName,
-      @required this.lastName,
-      @required this.email,
-      @required this.profileImageUrl, @required this.onTap,})
-      : super(key: key);
+  const AthleteCard({
+    Key key,
+    @required this.firstName,
+    @required this.lastName,
+    @required this.email,
+    @required this.profileImageUrl,
+    @required this.onTap,
+    @required this.lastLogin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,21 @@ class AthleteCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           onTap: () => onTap,
-          subtitle: Text(email),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(email),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Last Login:'),
+              Text(
+                DateFormat.yMMMMEEEEd().format(
+                  DateTime.parse(lastLogin),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tcf_dio/src/branding.dart';
 import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/views/athletes_page.dart';
+import 'package:tcf_dio/src/views/benchmarks_page.dart';
 import 'package:tcf_dio/src/views/workout_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
           }
 
           if (state is AthletesLoaded) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
 
             Navigator.of(context).pushNamed(
@@ -43,7 +44,7 @@ class HomePage extends StatelessWidget {
           }
 
           if (state is WorkoutsLoaded) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
 
             Navigator.of(context).pushNamed(
@@ -51,63 +52,109 @@ class HomePage extends StatelessWidget {
               arguments: state.workouts,
             );
           }
+
+          if (state is BenchmarksLoading) {
+            _showScaffold(context, 'Loading benchmarks...');
+          }
+
+          if (state is BenchmarksError) {
+            _showScaffold(context, state.errorMessage);
+          }
+
+          if (state is BenchmarksLoaded) {
+            ScaffoldMessenger.of(context)
+                .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
+
+            Navigator.of(context).pushNamed(
+              BenchmarksPage.routeName,
+              arguments: state.benchmarks,
+            );
+          }
         },
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.only(left: 80, right: 80),
+            padding: const EdgeInsets.only(left: 18, right: 18),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
                 SizedBox(
                   height: 20,
                 ),
-                FlatButton(
-                  height: 50,
-                  onPressed: () => context.read<AppCubit>().getAthletes(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.userNinja,
-                        color: tollandCrossFitWhite,
-                      ),
-                      SizedBox(
-                        width: 14,
-                      ),
-                      Text(
-                        'ATHLETES',
-                        style: TextStyle(color: tollandCrossFitWhite),
-                      ),
-                    ],
-                  ),
-                  color: tollandCrossFitBlue,
-                ),
+                _flatButton(
+                    context: context,
+                    onPressed: () => context.read<AppCubit>().getAthletes(),
+                    icon: FontAwesomeIcons.userNinja,
+                    buttonText: 'ATHLETES'),
                 SizedBox(
                   height: 8,
                 ),
-                FlatButton(
-                  height: 50,
-                  onPressed: () => context.read<AppCubit>().getWorkouts(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.dumbbell,
-                        color: tollandCrossFitWhite,
-                      ),
-                      SizedBox(
-                        width: 14,
-                      ),
-                      Text(
-                        'WORKOUTS',
-                        style: TextStyle(color: tollandCrossFitWhite),
-                      ),
-                    ],
-                  ),
-                  color: tollandCrossFitBlue,
+                _flatButton(
+                    context: context,
+                    onPressed: () => context.read<AppCubit>().getWorkouts(),
+                    icon: FontAwesomeIcons.dumbbell,
+                    buttonText: 'WORKOUTS'),
+                SizedBox(
+                  height: 8,
                 ),
+                _flatButton(
+                    context: context,
+                    onPressed: () => context
+                        .read<AppCubit>()
+                        .getBenchmarksByCategory('heroes'),
+                    icon: FontAwesomeIcons.heart,
+                    buttonText: 'BENCHMARK - HERO'),
+                SizedBox(
+                  height: 8,
+                ),
+                _flatButton(
+                    context: context,
+                    onPressed: () => context
+                        .read<AppCubit>()
+                        .getBenchmarksByCategory('girls'),
+                    icon: FontAwesomeIcons.female,
+                    buttonText: 'BENCHMARK - GIRLS'),
+                SizedBox(
+                  height: 8,
+                ),
+                _flatButton(
+                    context: context,
+                    onPressed: () => context
+                        .read<AppCubit>()
+                        .getBenchmarksByCategory('games'),
+                    icon: FontAwesomeIcons.gamepad,
+                    buttonText: 'BENCHMARK - GAMES'),
+                SizedBox(
+                  height: 8,
+                ),
+                _flatButton(
+                    context: context,
+                    onPressed: () => context
+                        .read<AppCubit>()
+                        .getBenchmarksByCategory('gymnastics'),
+                    icon: Icons.card_membership,
+                    buttonText: 'BENCHMARK - GYMNASTICS'),
+                SizedBox(
+                  height: 8,
+                ),
+                _flatButton(
+                    context: context,
+                    onPressed: () => context
+                        .read<AppCubit>()
+                        .getBenchmarksByCategory('notables'),
+                    icon: FontAwesomeIcons.registered,
+                    buttonText: 'BENCHMARK - NOTABLES'),
+                SizedBox(
+                  height: 8,
+                ),
+                _flatButton(
+                    context: context,
+                    onPressed: () => context
+                        .read<AppCubit>()
+                        .getBenchmarksByCategory('custom'),
+                    icon: FontAwesomeIcons.penAlt,
+                    buttonText: 'BENCHMARK - CUSTOM'),
               ],
             ),
           ),
@@ -117,11 +164,42 @@ class HomePage extends StatelessWidget {
   }
 }
 
+Widget _flatButton({
+  @required BuildContext context,
+  @required String buttonText,
+  @required Function onPressed,
+  @required IconData icon,
+}) {
+  return FlatButton(
+    height: 50,
+    minWidth: MediaQuery.of(context).size.width * .80,
+    onPressed: onPressed,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Icon(
+          icon,
+          color: tollandCrossFitWhite,
+        ),
+        SizedBox(
+          width: 14,
+        ),
+        Text(
+          buttonText,
+          style: TextStyle(color: tollandCrossFitWhite),
+        ),
+      ],
+    ),
+    color: tollandCrossFitBlue,
+  );
+}
+
 _showScaffold(BuildContext context, String message) {
-  Scaffold.of(context)
+  ScaffoldMessenger.of(context)
       .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
 
-  return Scaffold.of(context).showSnackBar(SnackBar(
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(message),
     duration: Duration(seconds: 4),
   ));

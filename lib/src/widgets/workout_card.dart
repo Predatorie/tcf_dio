@@ -67,6 +67,7 @@ class WorkoutCard extends StatelessWidget {
               SizedBox(
                 height: 6,
               ),
+              Text(scoreType),
             ],
           ),
         ),

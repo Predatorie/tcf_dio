@@ -5,8 +5,8 @@ abstract class AppState extends Equatable {
 }
 
 // Athletes
-class AthletesInitial extends AppState {
-  const AthletesInitial();
+class AppInitial extends AppState {
+  const AppInitial();
   @override
   List<Object> get props => [];
 }
@@ -30,6 +30,30 @@ class AthletesError extends AppState {
   final String errorMessage;
 
   const AthletesError({@required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+class AthletesNextLoading extends AppState {
+  const AthletesNextLoading();
+  @override
+  List<Object> get props => [];
+}
+
+class AthletesNextLoaded extends AppState {
+  final Athletes athletes;
+
+  const AthletesNextLoaded({@required this.athletes});
+
+  @override
+  List<Object> get props => [athletes];
+}
+
+class AthletesNextError extends AppState {
+  final String errorMessage;
+
+  const AthletesNextError({@required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];
@@ -103,6 +127,30 @@ class MovementsError extends AppState {
   final String errorMessage;
 
   const MovementsError({@required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+class BenchmarksLoading extends AppState {
+  const BenchmarksLoading();
+  @override
+  List<Object> get props => [];
+}
+
+class BenchmarksLoaded extends AppState {
+  final Benchmarks benchmarks;
+
+  const BenchmarksLoaded({@required this.benchmarks});
+
+  @override
+  List<Object> get props => [benchmarks];
+}
+
+class BenchmarksError extends AppState {
+  final String errorMessage;
+
+  const BenchmarksError({@required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

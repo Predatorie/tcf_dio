@@ -61,16 +61,13 @@ class _VideosView extends StatelessWidget {
                         /// https://www.youtube.com/watch?v=JadgYV2qnsQ
                         /// final video = 'https://www.youtube.com/watch?v=${videos[index].id}';
                       },
-                      child: Hero(
-                        tag: 'video_${videos[index].id}',
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.network(
-                            videos[index].thumbnails.medium.url,
-                            height: 180,
-                            width: 320,
-                            fit: BoxFit.cover,
-                          ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: Image.network(
+                          videos[index].thumbnails.medium.url,
+                          height: 180,
+                          width: 320,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),

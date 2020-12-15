@@ -1,25 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcf_dio/src/cubits/app_cubit.dart';
-import 'package:tcf_dio/src/models/workouts.dart';
+import 'package:tcf_dio/src/models/benchmarks.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tcf_dio/src/views/movements_page.dart';
-import 'package:tcf_dio/src/widgets/workout_card.dart';
+import 'package:tcf_dio/src/widgets/benchmark_card.dart';
 
-class WorkoutPage extends StatelessWidget {
-  static const String routeName = '/workout';
-
-  const WorkoutPage({
-    Key key,
-  }) : super(key: key);
+class BenchmarksPage extends StatelessWidget {
+  static const String routeName = '/benchmarks';
 
   @override
   Widget build(BuildContext context) {
-    final Workouts workouts = ModalRoute.of(context).settings.arguments;
+    final Benchmarks benchmarks = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('* Today\'s Workouts *'),
+        title: Text('BENCHMARKS'),
         centerTitle: true,
       ),
       body: BlocListener<AppCubit, AppState>(
@@ -39,50 +34,54 @@ class WorkoutPage extends StatelessWidget {
             _showScaffold(context, state.errorMessage);
           }
         },
-        child: _WorkoutsView(
-          workouts: workouts,
+        child: _BenchmarksView(
+          benchmarks: benchmarks,
         ),
       ),
     );
   }
 }
 
-class _WorkoutsView extends StatelessWidget {
-  final Workouts workouts;
+class _BenchmarksView extends StatelessWidget {
+  final Benchmarks benchmarks;
 
-  const _WorkoutsView({
+  const _BenchmarksView({
     Key key,
-    @required this.workouts,
+    @required this.benchmarks,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: workouts.data.length,
+      itemCount: benchmarks.data.length,
       itemBuilder: (BuildContext context, int index) {
-        return _WorkoutResultItem(workout: workouts.data[index]);
+        return _BenchmarkResultItem(
+          benchmark: benchmarks.data[index],
+        );
       },
     );
   }
 }
 
-class _WorkoutResultItem extends StatelessWidget {
-  final Datum workout;
+class _BenchmarkResultItem extends StatelessWidget {
+  final Datum benchmark;
 
-  const _WorkoutResultItem({Key key, this.workout}) : super(key: key);
+  const _BenchmarkResultItem({Key key, @required this.benchmark})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(builder: (ctx, state) {
-      return WorkoutCard(
-        title: workout.attributes.title,
-        description: workout.attributes.description,
-        scoreType: workout.attributes.scoreType,
-        track: workout.attributes.track,
-        movements: workout.attributes.movementIds,
-        onTap: workout.attributes.movementIds.length > 0
+      return BenchmarkCard(
+        name: benchmark.attributes.name,
+        description: benchmark.attributes.description,
+        scoreType: benchmark.attributes.scoreType,
+        category: benchmark.attributes.category,
+        movements: benchmark.attributes.movementIds,
+        onTap: benchmark.attributes.movementIds.length > 0
             ? () => ctx
                 .read<AppCubit>()
-                .getMovements(movementsId: workout.attributes.movementIds)
+                .getMovements(movementsId: benchmark.attributes.movementIds)
             : () => _showScaffold(context, 'No Movements available'),
       );
     });

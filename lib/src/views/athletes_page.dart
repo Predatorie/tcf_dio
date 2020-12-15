@@ -4,15 +4,21 @@ import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/models/athletes.dart';
 import 'package:tcf_dio/src/widgets/athlete_card.dart';
 
-class AthletesPage extends StatelessWidget {
+class AthletesPage extends StatefulWidget {
   static const String routeName = '/athletes';
+
+  @override
+  _AthletesPageState createState() => _AthletesPageState();
+}
+
+class _AthletesPageState extends State<AthletesPage> {
   @override
   Widget build(BuildContext context) {
     final Athletes athletes = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Athletes'),
+          title: Text('${athletes.data.length} Athletes'),
           centerTitle: true,
         ),
         body: _AthletesView(
@@ -34,7 +40,9 @@ class _AthletesView extends StatelessWidget {
     return ListView.builder(
       itemCount: athletes.data.length,
       itemBuilder: (BuildContext context, int index) {
-        return _SearchResultItem(athlete: athletes.data[index]);
+        return _SearchResultItem(
+          athlete: athletes.data[index],
+        );
       },
     );
   }
@@ -53,6 +61,7 @@ class _SearchResultItem extends StatelessWidget {
         lastName: athlete.attributes.lastName,
         profileImageUrl: athlete.attributes.profileImageUrl,
         onTap: () => ctx.read<AppCubit>().getWorkouts(),
+        lastLogin: athlete.attributes.lastLogin.toIso8601String(),
       );
     });
   }
