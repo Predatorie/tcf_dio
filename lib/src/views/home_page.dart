@@ -8,6 +8,8 @@ import 'package:tcf_dio/src/views/benchmarks_page.dart';
 import 'package:tcf_dio/src/views/workout_page.dart';
 
 class HomePage extends StatelessWidget {
+  static const String routeName = '/homepage';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

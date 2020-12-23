@@ -72,19 +72,17 @@ class AppCubit extends Cubit<AppState> {
 
     /// intialize list to hold results
     List<Movement> movements = [];
+    final result = await Future.wait(futures);
 
-    // wait until all furtures have completed
-    Future.wait(futures).then((e) => {
-          e.fold([], (previousValue, element) {
-            element.fold((l) {
-              emit(MovementsError(errorMessage: l.toString()));
-              return;
-            }, (r) {
-              /// add to our running total
-              movements.add(r);
-            });
-          }),
-        });
+    result.forEach((element) {
+      element.fold((l) {
+        emit(
+          MovementsError(errorMessage: l.toString()),
+        );
+      }, (r) {
+        movements.add(r);
+      });
+    });
 
     movements.sort(
         (a, b) => a.data.attributes.name.compareTo(b.data.attributes.name));

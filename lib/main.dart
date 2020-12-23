@@ -8,6 +8,7 @@ import 'package:tcf_dio/src/views/athlete_page.dart';
 import 'package:tcf_dio/src/views/athletes_page.dart';
 import 'package:tcf_dio/src/views/benchmarks_page.dart';
 import 'package:tcf_dio/src/views/home_page.dart';
+import 'package:tcf_dio/src/views/main_page.dart';
 import 'package:tcf_dio/src/views/movements_page.dart';
 import 'package:tcf_dio/src/views/workout_page.dart';
 
@@ -27,10 +28,16 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SugarWOD Demo',
-      theme: ThemeData().copyWith(primaryColor: tollandCrossFitBlue),
+      theme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ).copyWith(primaryColor: tollandCrossFitBlue),
       routes: {
         '/': (context) => BlocProvider.value(
-              child: HomePage(),
+              child: MainPage(),
+              value: _appCubit,
+            ),
+        HomePage.routeName: (context) => BlocProvider.value(
+              child: AthletesPage(),
               value: _appCubit,
             ),
         AthletesPage.routeName: (context) => BlocProvider.value(
@@ -54,6 +61,7 @@ class _MyAppState extends State<MyApp> {
               value: _appCubit,
             ),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 
