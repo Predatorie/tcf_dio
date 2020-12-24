@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tcf_dio/src/branding.dart';
 import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/models/workouts.dart';
 import 'package:tcf_dio/src/views/movements_page.dart';
@@ -18,31 +19,60 @@ class WorkoutPage extends StatelessWidget {
     final Workouts workouts = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('* Today\'s Workouts *'),
-        centerTitle: true,
-      ),
-      body: BlocListener<AppCubit, AppState>(
-        listener: (context, state) {
-          if (state is MovementsLoaded) {
-            ScaffoldMessenger.of(context)
-                .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
+      body: SafeArea(
+        bottom: false,
+        child: BlocListener<AppCubit, AppState>(
+          listener: (context, state) {
+            if (state is MovementsLoaded) {
+              ScaffoldMessenger.of(context)
+                  .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
 
-            Navigator.of(context).pushNamed(MovementsPage.routeName);
-          }
+              Navigator.of(context).pushNamed(MovementsPage.routeName);
+            }
 
-          if (state is MovementsLoading) {
-            _showScaffold(context, 'Loading movements...');
-          }
+            if (state is MovementsLoading) {
+              _showScaffold(context, 'Loading movements...');
+            }
 
-          if (state is MovementsError) {
-            _showScaffold(context, state.errorMessage);
-          }
-        },
-        child: _WorkoutsView(
-          workouts: workouts,
+            if (state is MovementsError) {
+              _showScaffold(context, state.errorMessage);
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [tollandCrossFitBlue, tollandCrossFitWhite],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.3, 0.7])),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Hero(
+                    tag: '1',
+                    child: ClipOval(
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        child: Image.asset(
+                              'assets/images/tcf_logo_small.png',
+                              fit: BoxFit.cover,
+                            )),
+                      ),
+                    ),
+                ),
+                 Expanded(child: _WorkoutsView(workouts: workouts)),
+
+
+              ],
+              ),
+          ),
+          ),
         ),
-      ),
     );
   }
 }

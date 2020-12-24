@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
               value: _appCubit,
             ),
         HomePage.routeName: (context) => BlocProvider.value(
-              child: AthletesPage(),
+              child: HomePage(),
               value: _appCubit,
             ),
         AthletesPage.routeName: (context) => BlocProvider.value(
