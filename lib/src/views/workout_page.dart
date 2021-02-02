@@ -19,6 +19,9 @@ class WorkoutPage extends StatelessWidget {
     final Workouts workouts = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Workouts'),
+      ),
       body: SafeArea(
         bottom: false,
         child: BlocListener<AppCubit, AppState>(
@@ -39,12 +42,7 @@ class WorkoutPage extends StatelessWidget {
             }
           },
           child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [tollandCrossFitBlue, tollandCrossFitWhite],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.3, 0.7])),
+            color: tollandCrossFitBlue,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -56,23 +54,21 @@ class WorkoutPage extends StatelessWidget {
                     tag: '1',
                     child: ClipOval(
                       child: Container(
-                        height: 50,
-                        width: 50,
-                        child: Image.asset(
-                              'assets/images/tcf_logo_small.png',
-                              fit: BoxFit.cover,
-                            )),
-                      ),
+                          height: 50,
+                          width: 50,
+                          child: Image.asset(
+                            'assets/images/tcf_logo_small.png',
+                            fit: BoxFit.cover,
+                          )),
                     ),
+                  ),
                 ),
-                 Expanded(child: _WorkoutsView(workouts: workouts)),
-
-
+                Expanded(child: _WorkoutsView(workouts: workouts)),
               ],
-              ),
-          ),
+            ),
           ),
         ),
+      ),
     );
   }
 }

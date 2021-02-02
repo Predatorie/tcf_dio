@@ -33,7 +33,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(athletesFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -48,7 +48,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(boxFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -63,7 +63,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(barbellLiftsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -94,7 +94,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(barbellLiftsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -110,7 +110,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(benchMarksByCategoryFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -125,7 +125,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(benchMarkFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -140,7 +140,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(movementFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -155,7 +155,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(movementsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -170,7 +170,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(athletesFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -185,7 +185,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(workoutsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -200,7 +200,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(workoutFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -218,7 +218,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(workoutsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -237,7 +237,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(workoutsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -252,7 +252,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(workoutsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -271,7 +271,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(workoutsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }
@@ -290,7 +290,7 @@ class ApiRepository with HttpProvider {
       );
 
       return Right(workoutsFromJson(body));
-    } catch (e) {
+    } catch (_) {
       return Left(NetworkFailure());
     }
   }

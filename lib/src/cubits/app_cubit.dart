@@ -49,6 +49,7 @@ class AppCubit extends Cubit<AppState> {
         (r) => emit(AffiliateLoaded(box: r)));
   }
 
+  /// gets a list of workouts
   Future<void> getWorkouts() async {
     emit(WorkoutsLoading());
 
@@ -60,6 +61,7 @@ class AppCubit extends Cubit<AppState> {
         (r) => emit(WorkoutsLoaded(workouts: r)));
   }
 
+  /// gets a list of movements for a secific workout
   Future<void> getMovements({List<String> movementsId}) async {
     emit(MovementsLoading());
 
@@ -89,6 +91,7 @@ class AppCubit extends Cubit<AppState> {
     emit(MovementsLoaded(movements: movements));
   }
 
+  /// get a list of benchmarks for a specific category
   Future<void> getBenchmarksByCategory(String category) async {
     emit(BenchmarksLoading());
 

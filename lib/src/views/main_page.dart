@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -96,7 +97,7 @@ class MainPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: const EdgeInsets.only(left: 30, top: 80),
                   child: Column(
                     children: <Widget>[
                       Text(
@@ -111,6 +112,9 @@ class MainPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Container(
                   height: 500,
