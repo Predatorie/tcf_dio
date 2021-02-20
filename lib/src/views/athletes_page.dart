@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tcf_dio/src/branding.dart';
 import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/models/athletes.dart';
 import 'package:tcf_dio/src/widgets/athlete_card.dart';
@@ -18,11 +19,44 @@ class _AthletesPageState extends State<AthletesPage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('${athletes.data.length} Athletes'),
+          title: Text('ATHLETES'),
           centerTitle: true,
         ),
-        body: _AthletesView(
-          athletes: athletes,
+        body: SafeArea(
+          bottom: false,
+          child: BlocListener<AppCubit, AppState>(
+            listener: (context, state) {},
+            child: Container(
+              color: tollandCrossFitBlue,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Hero(
+                      tag: '1',
+                      child: ClipOval(
+                        child: Container(
+                            height: 50,
+                            width: 50,
+                            child: Image.asset(
+                              'assets/images/tcf_logo_small.png',
+                              fit: BoxFit.cover,
+                            )),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: _AthletesView(
+                      athletes: athletes,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ));
   }
 }
@@ -65,4 +99,14 @@ class _SearchResultItem extends StatelessWidget {
       );
     });
   }
+}
+
+_showScaffold(BuildContext context, String message) {
+  ScaffoldMessenger.of(context)
+      .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
+
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(message),
+    duration: Duration(seconds: 4),
+  ));
 }

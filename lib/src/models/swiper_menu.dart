@@ -67,4 +67,11 @@ List<SwiperMenu> menu = [
     category: 'BENCHMARK',
     asset: 'assets/images/tcf_logo_small.png',
   ),
+  SwiperMenu(
+    title: 'Athletes',
+    position: 8,
+    heroId: '8',
+    category: 'INFO',
+    asset: 'assets/images/tcf_logo_small.png',
+  ),
 ];

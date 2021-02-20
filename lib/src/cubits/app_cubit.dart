@@ -38,6 +38,23 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
+  /// gets initial list of athletes limited to 1000
+  Future<void> getAthletesGroupedByFirstName() async {
+    emit(AthletesLoading());
+
+    final athletes = await apiRepository.getAthletes();
+    athletes.fold((l) {
+      emit(
+        AthletesError(errorMessage: l.toString()),
+      );
+    }, (r) {
+      r.data.sort(
+          (a, b) => a.attributes.firstName.compareTo(b.attributes.firstName));
+
+      emit(AthletesLoaded(athletes: r));
+    });
+  }
+
   Future<void> getAffiliate() async {
     emit(AffiliateLoading());
 

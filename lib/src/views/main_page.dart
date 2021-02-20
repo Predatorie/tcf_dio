@@ -4,6 +4,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:tcf_dio/src/branding.dart';
 import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/models/swiper_menu.dart';
+import 'package:tcf_dio/src/views/athletes_page.dart';
 import 'package:tcf_dio/src/views/benchmarks_page.dart';
 import 'package:tcf_dio/src/views/workout_page.dart';
 
@@ -34,6 +35,9 @@ class MainPage extends StatelessWidget {
         break;
       case 7:
         BlocProvider.of<AppCubit>(context).getBenchmarksByCategory('custom');
+        break;
+      case 8:
+        BlocProvider.of<AppCubit>(context).getAthletesGroupedByFirstName();
         break;
 
       default:
@@ -69,6 +73,25 @@ class MainPage extends StatelessWidget {
               Navigator.of(context).pushNamed(
                 WorkoutPage.routeName,
                 arguments: state.workouts,
+              );
+            }
+
+            /// ATHLETES
+            if (state is AthletesLoading) {
+              _showScaffold(context, 'Loading athletes...');
+            }
+
+            if (state is AthletesError) {
+              _showScaffold(context, state.errorMessage);
+            }
+
+            if (state is AthletesLoaded) {
+              ScaffoldMessenger.of(context)
+                  .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
+
+              Navigator.of(context).pushNamed(
+                AthletesPage.routeName,
+                arguments: state.athletes,
               );
             }
 

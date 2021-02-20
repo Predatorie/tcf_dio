@@ -4,7 +4,6 @@ import 'package:tcf_dio/src/bloc/bloc_observer.dart';
 import 'package:tcf_dio/src/branding.dart';
 import 'package:tcf_dio/src/cubits/app_cubit.dart';
 import 'package:tcf_dio/src/repositories/api_repository.dart';
-import 'package:tcf_dio/src/views/athlete_page.dart';
 import 'package:tcf_dio/src/views/athletes_page.dart';
 import 'package:tcf_dio/src/views/benchmarks_page.dart';
 import 'package:tcf_dio/src/views/home_page.dart';
@@ -42,10 +41,6 @@ class _MyAppState extends State<MyApp> {
             ),
         AthletesPage.routeName: (context) => BlocProvider.value(
               child: AthletesPage(),
-              value: _appCubit,
-            ),
-        AthletePage.routeName: (context) => BlocProvider.value(
-              child: AthletePage(),
               value: _appCubit,
             ),
         WorkoutPage.routeName: (context) => BlocProvider.value(
