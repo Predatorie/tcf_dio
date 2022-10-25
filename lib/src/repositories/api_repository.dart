@@ -16,7 +16,7 @@ import 'package:tcf_dio/src/services/http_service.dart';
 class ApiRepository with HttpProvider {
   /// defines out authorization header
   final Map<String, String> _headers = {
-    'Authorization': Keys.Key,
+    'Authorization': Keys.key,
     'Content-Type': 'application/json'
   };
 

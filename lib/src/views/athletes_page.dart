@@ -100,13 +100,3 @@ class _SearchResultItem extends StatelessWidget {
     });
   }
 }
-
-_showScaffold(BuildContext context, String message) {
-  ScaffoldMessenger.of(context)
-      .removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss);
-
-  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text(message),
-    duration: Duration(seconds: 4),
-  ));
-}

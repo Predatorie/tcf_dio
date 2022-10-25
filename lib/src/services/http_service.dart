@@ -24,11 +24,6 @@ mixin HttpProvider {
     /// Error codes in the 400 range contain a JSON response that describes the error.
     if (response.statusCode >= 400 && response.statusCode < 500) {
       throw Exception(response.body);
-
-      /// {
-      ///   "type" : "other_error",
-      ///   "message" : "Artist Not Found"
-      /// }
     }
 
     /// Error codes in the 500 range are not expected
@@ -61,11 +56,6 @@ mixin HttpProvider {
     /// Error codes in the 400 range contain a JSON response that describes the error.
     if (response.statusCode >= 400 && response.statusCode < 500) {
       throw Exception(response.body);
-
-      /// {
-      ///   "type" : "other_error",
-      ///   "message" : "Artist Not Found"
-      /// }
     }
 
     /// Error codes in the 500 range are not expected
@@ -98,11 +88,6 @@ mixin HttpProvider {
     /// Error codes in the 400 range contain a JSON response that describes the error.
     if (response.statusCode >= 400 && response.statusCode < 500) {
       throw Exception(response.body);
-
-      /// {
-      ///   "type" : "other_error",
-      ///   "message" : "Artist Not Found"
-      /// }
     }
 
     /// Error codes in the 500 range are not expected

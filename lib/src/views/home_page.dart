@@ -172,9 +172,9 @@ Widget _flatButton({
   @required Function onPressed,
   @required IconData icon,
 }) {
-  return FlatButton(
-    height: 50,
-    minWidth: MediaQuery.of(context).size.width * .80,
+  return TextButton(
+    //style: TextStyle(height: 50,
+//    minWidth: MediaQuery.of(context).size.width * .80,
     onPressed: onPressed,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -193,7 +193,15 @@ Widget _flatButton({
         ),
       ],
     ),
-    color: tollandCrossFitBlue,
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) {
+          if (states.contains(MaterialState.pressed))
+            return Theme.of(context).colorScheme.primary.withOpacity(0.5);
+          return null; // Use the component's default.
+        },
+      ),
+    ),
   );
 }
 

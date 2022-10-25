@@ -78,7 +78,7 @@ class AppCubit extends Cubit<AppState> {
         (r) => emit(WorkoutsLoaded(workouts: r)));
   }
 
-  /// gets a list of movements for a secific workout
+  /// gets a list of movements for a specific workout
   Future<void> getMovements({List<String> movementsId}) async {
     emit(MovementsLoading());
 
@@ -89,7 +89,7 @@ class AppCubit extends Cubit<AppState> {
       futures.add(apiRepository.getMovementById(element));
     });
 
-    /// intialize list to hold results
+    /// initialize list to hold results
     List<Movement> movements = [];
     final result = await Future.wait(futures);
 
