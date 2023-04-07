@@ -10,7 +10,7 @@ mixin HttpProvider {
     http.Response response;
 
     try {
-      response = await _client.get(url, headers: headers);
+      response = await _client.get(url as Uri, headers: headers);
     } catch (e) {
       throw (Exception(e.toString()));
     }
@@ -42,7 +42,7 @@ mixin HttpProvider {
     http.Response response;
 
     try {
-      response = await _client.get(url, headers: headers);
+      response = await _client.get(url as Uri, headers: headers);
     } catch (e) {
       throw (Exception(e.toString()));
     }
@@ -74,7 +74,7 @@ mixin HttpProvider {
     http.Response response;
 
     try {
-      response = await _client.post(url);
+      response = await _client.post(url as Uri);
     } catch (e) {
       throw (Exception(e.toString()));
     }
