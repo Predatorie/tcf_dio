@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:tcf_dio/src/exceptions/failures.dart';
-import 'package:tcf_dio/src/key/Key.dart';
+import 'package:tcf_dio/src/key/Keys.dart';
 import 'package:tcf_dio/src/models/affiliate.dart';
 import 'package:tcf_dio/src/models/athletes.dart';
 import 'package:tcf_dio/src/models/barbell_lift.dart';
